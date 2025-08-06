@@ -23,3 +23,14 @@ This project implements a simple yet robust data pipeline designed for small to 
 ### Visualization
 - Dashboards: Connected to ClickHouse for real-time analytics
 - Self-service reporting and data exploration
+
+## Installation
+### Airflow
+1. Generate environment variable for Airflow
+   ```bash
+   echo -e "AIRFLOW_UID=$(id -u)" > airflow/.env
+   ```
+2. Run docker compose to deploy Airflow
+   ```bash
+   docker compose up
+   ```

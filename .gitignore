@@ -1,2 +1,8 @@
-dataset/yelp/*
+__pycache__
+.env
 venv/*
+
+airflow/logs/*
+airflow/config/*
+
+dataset/yelp/*
