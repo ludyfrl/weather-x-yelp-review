@@ -1,0 +1,13 @@
+yelp_postgres_dwh:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('DBT_POSTGRES_HOST', 'postgres-dwh') }}"
+      port: "{{ env_var('DBT_POSTGRES_PORT', '5432') | int }}"
+      user: "{{ env_var('DBT_POSTGRES_USER', 'postgres') }}"
+      pass: "{{ env_var('DBT_POSTGRES_PASSWORD', 'postgres123') }}"
+      dbname: "{{ env_var('DBT_POSTGRES_DATABASE', 'yelp_staging') }}"
+      schema: public
+      threads: 4
+      keepalives_idle: 0

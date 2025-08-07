@@ -62,7 +62,7 @@ Generate environment variable for Airflow
 ```
 Run docker compose to deploy Airflow and another docker container for postgres-dwh.
 ```bash
-docker compose -f airflow/docker-compose.yaml up -d
+docker compose -f airflow/docker-compose.yml up -d
 
 docker run -d \
     --name postgres-dwh \
@@ -82,4 +82,18 @@ docker exec airflow-airflow-apiserver-1 airflow connections add \
   --conn-port 5432 \
   --conn-login 'data_dwh' \
   --conn-password 'data_dwh'
+```
+
+### DBT
+Generate environment variable for DBT
+```bash
+./setup_dbt.sh
+```
+Build custom DBT docker image so our Airflow task can use it
+```bash
+cd dbt-transform
+docker build -t dbt-transform:latest .
+
+# If Airflow have permission problem when accessing docker.sock, use this command
+# sudo chmod 666 /var/run/docker.sock
 ```

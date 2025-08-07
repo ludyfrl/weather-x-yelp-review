@@ -1,0 +1,34 @@
+services:
+  # DBT service
+  dbt:
+    build: .
+    container_name: dbt-transform
+    volumes:
+      - ./:/usr/app/dbt
+      - ./profiles.yml:/usr/app/dbt/profiles.yml
+      - dbt-target:/usr/app/dbt/target
+      - dbt-logs:/usr/app/dbt/logs
+    command:
+      - bash 
+      - -c 
+      - |
+        echo "Launching dbt"
+        #
+        sleep infinity
+    environment:
+      DBT_PROFILES_DIR: /usr/app/dbt
+      DBT_POSTGRES_HOST: ${DBT_POSTGRES_HOST}
+      DBT_POSTGRES_PORT: ${DBT_POSTGRES_PORT}
+      DBT_POSTGRES_USER: ${DBT_POSTGRES_USER}
+      DBT_POSTGRES_PASSWORD: ${DBT_POSTGRES_PASSWORD}
+      DBT_POSTGRES_DATABASE: ${DBT_POSTGRES_DATABASE}
+    networks:
+      - airflow_default  # Use same network as Airflow and PostgreSQL
+
+volumes:
+  dbt-target:
+  dbt-logs:
+
+networks:
+  airflow_default:
+    external: true

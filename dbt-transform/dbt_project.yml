@@ -1,0 +1,38 @@
+name: 'dbt_yelp_project'
+
+config-version: 2
+version: '1.0.0'
+
+profile: 'yelp_postgres_dwh'
+
+model-paths: ["models"]
+seed-paths: ["data"]
+test-paths: ["tests"]
+analysis-paths: ["analyses"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# Model configurations
+models:
+  dbt_yelp_project:
+    staging:
+      +database: data_dwh
+      +schema: staging
+      +materialized: view
+      +tags: ['staging']
+    
+    ods:
+      +database: data_dwh
+      +schema: ods
+      +materialized: table
+      +tags: ['ods']
+    
+    dw:
+      +database: data_dwh
+      +schema: dw
+      +materialized: table
+      +tags: ['dw', 'analytics']

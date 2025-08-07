@@ -5,4 +5,8 @@ venv/*
 airflow/logs/*
 airflow/config/*
 
+dbt-transform/logs/*
+dbt-transform/target/*
+dbt-transform/.user.yml
+
 dataset/yelp/*
