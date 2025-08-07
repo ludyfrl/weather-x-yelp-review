@@ -10,19 +10,19 @@ default_args = {
 }
 
 with DAG(
-    'staging_to_ods',
+    'ods_to_dw',
     default_args=default_args,
-    description='Transform all staging tables to ODS tables',
+    description='Transform all ODS tables to DW tables',
     schedule=None,
     start_date=datetime(2025, 8, 6),
     catchup=False,
-    tags=['transform', 'ods', 'yelp', 'weather'],
+    tags=['transform', 'dw', 'yelp', 'weather'],
 ) as dag:
     
-    staging_to_ods = DockerOperator(
-        task_id='staging_to_ods',
+    ods_to_dw = DockerOperator(
+        task_id='ods_to_dw',
         image='dbt-transform',
-        command='dbt run --select ods',
+        command='dbt run --select dw',
         auto_remove='success',
         docker_url='unix://var/run/docker.sock',
         network_mode='airflow_default',
@@ -36,4 +36,4 @@ with DAG(
         },
     )
 
-    staging_to_ods
+    ods_to_dw

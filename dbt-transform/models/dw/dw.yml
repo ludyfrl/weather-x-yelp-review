@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: dw
+    description: Analytics-ready aggregated data
+    database: data_dwh
+    schema: dw
+    tables:
+      - name: fact_review
+        description: Yelp review fact table
+        
+      - name: fact_checkin
+        description: Business checkin fact table
+        
+      - name: fact_tip
+        description: Tip fact table
+        
+      - name: dim_user
+        description: Dimension for Yelp user
+        
+      - name: dim_business
+        description: Dimension for Yelp business
+      
+      - name: dim_date_weather
+        description: Dimension for date and weather
+      
