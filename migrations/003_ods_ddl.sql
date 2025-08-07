@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS ods.yelp_review (
     review_id VARCHAR PRIMARY KEY,
     user_id VARCHAR,
     business_id VARCHAR,
-    stars INTEGER,
+    stars DECIMAL(2, 1),
     useful INTEGER,
     funny INTEGER,
     cool INTEGER,
@@ -83,8 +83,8 @@ CREATE TABLE IF NOT EXISTS ods.yelp_review (
 
 CREATE TABLE IF NOT EXISTS ods.weather_precipitation (
     date VARCHAR PRIMARY KEY,
-    precipitation DECIMAL(3, 2),
-    precipitation_normal DECIMAL(3, 2),
+    precipitation DECIMAL(10, 3),
+    precipitation_normal DECIMAL(10, 3),
     _ingested_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     _created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     _updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -92,10 +92,10 @@ CREATE TABLE IF NOT EXISTS ods.weather_precipitation (
 
 CREATE TABLE IF NOT EXISTS ods.weather_temperature (
     date VARCHAR PRIMARY KEY,
-    min DECIMAL(3, 2),
-    max DECIMAL(3, 2),
-    normal_min DECIMAL(3, 2),
-    normal_max DECIMAL(3, 2),
+    min DECIMAL(10, 3),
+    max DECIMAL(10, 3),
+    normal_min DECIMAL(10, 3),
+    normal_max DECIMAL(10, 3),
     _ingested_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     _created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     _updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

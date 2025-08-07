@@ -86,12 +86,12 @@ CREATE TABLE IF NOT EXISTS dw.dim_date_weather (
     day INTEGER,
     day_name VARCHAR,
     month_name VARCHAR,
-    min_temperature DECIMAL(3, 2),
-    max_temperature DECIMAL(3, 2),
-    normal_min_temperature DECIMAL(3, 2),
-    normal_max_temperature DECIMAL(3, 2),
-    precipitation DECIMAL(3, 2),
-    precipitation_normal DECIMAL(3, 2),
+    min_temperature DECIMAL(10, 3),
+    max_temperature DECIMAL(10, 3),
+    normal_min_temperature DECIMAL(10, 3),
+    normal_max_temperature DECIMAL(10, 3),
+    precipitation DECIMAL(10, 3),
+    precipitation_normal DECIMAL(10, 3),
     _created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     _updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

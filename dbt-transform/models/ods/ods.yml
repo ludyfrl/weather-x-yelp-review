@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: ods
+    description: Operational Data Store. Cleaned and standardized data layer
+    database: data_dwh
+    schema: ods
+    tables:
+      - name: yelp_business
+        description: Contains business data including location data, attributes, and categories.
+        
+      - name: yelp_checkin
+        description: Checkins on a business.
+        
+      - name: yelp_review
+        description: Contains full review text data including the user_id that wrote the review and the business_id the review is written for.
+        
+      - name: yelp_tip
+        description: Tips written by a user on a business. Tips are shorter than reviews and tend to convey quick suggestions.
+        
+      - name: yelp_user
+        description: User data including the user's friend mapping and all the metadata associated with the user.
+      
+      - name: weather_temperature
+        description: Daily weather temperature data
+      
+      - name: weather_precipitation
+        description: Daily weather precipitation data

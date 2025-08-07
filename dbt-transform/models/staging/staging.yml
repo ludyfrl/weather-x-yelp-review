@@ -1,0 +1,28 @@
+version: 2
+
+sources:
+  - name: staging
+    description: Raw data landing zone
+    database: data_dwh
+    schema: staging
+    tables:
+      - name: raw_yelp_business
+        description: Raw business data from Yelp CSV files
+        
+      - name: raw_yelp_checkin
+        description: Raw checkin data from Yelp CSV files
+        
+      - name: raw_yelp_review
+        description: Raw review data from Yelp CSV files
+      
+      - name: raw_yelp_tip
+        description: Raw tip data from Yelp CSV files
+      
+      - name: raw_yelp_user
+        description: Raw user data from Yelp CSV files
+      
+      - name: raw_weather_temperature
+        description: Raw temperature data from CSV file
+      
+      - name: raw_weather_precipitation
+        description: Raw precipitation data from CSV file

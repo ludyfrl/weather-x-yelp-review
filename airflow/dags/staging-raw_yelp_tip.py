@@ -10,9 +10,9 @@ default_args = {
 }
 
 with DAG(
-    'staging.raw_yelp_checkin',
+    'staging.raw_yelp_tip',
     default_args=default_args,
-    description='Ingest W raw CSV data to DWH',
+    description='Ingest Yelp tip raw CSV data to DWH',
     schedule=None,
     start_date=datetime(2025, 8, 6),
     catchup=False,
@@ -21,19 +21,19 @@ with DAG(
 
     @task()
     def ingest_csv_file():
-        """Ingest Yelp checkin data from raw CSV file"""
+        """Ingest Yelp tip data from raw CSV file"""
         import pandas as pd
 
         postgres_hook = PostgresHook(postgres_conn_id='postgres_dwh')
         engine = postgres_hook.get_sqlalchemy_engine()
 
         chunk_size = 20000
-        filepath = '/opt/dataset/yelp/yelp_academic_dataset_checkin.csv'
+        filepath = '/opt/dataset/yelp/yelp_academic_dataset_tip.csv'
         total_rows = 0
         with pd.read_csv(filepath, sep=";", chunksize=chunk_size) as reader:
             for chunk in reader:
                 chunk.to_sql(
-                    'raw_yelp_checkin',
+                    'raw_yelp_tip',
                     engine,
                     schema='staging',
                     if_exists='append',
