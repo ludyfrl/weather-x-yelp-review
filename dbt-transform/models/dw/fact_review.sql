@@ -1,11 +1,18 @@
 {{ config(
     database='data_dwh',
     schema='dw',
-    materialized='incremental',
+    materialized='table',
     unique_key='review_id'
 ) }}
 
-WITH cleaned AS (
+WITH review_casted AS (
+    SELECT
+        *,
+        SPLIT_PART(date, ' ', 1) AS review_date
+    FROM {{ source('ods', 'yelp_review') }}
+),
+
+cleaned AS (
     SELECT
         r.review_id,
         r.user_id,
@@ -18,9 +25,9 @@ WITH cleaned AS (
         r.text AS review_text,
         CURRENT_TIMESTAMP AS _created_at,
         CURRENT_TIMESTAMP AS _updated_at
-    FROM {{ source('ods', 'yelp_review') }} r
+    FROM review_casted r
     LEFT JOIN {{ ref('dim_date_weather') }} dw
-      ON r.date = dw.full_date
+      ON r.review_date = dw.full_date
 )
 
 SELECT * FROM cleaned
