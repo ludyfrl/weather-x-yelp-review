@@ -1,7 +1,7 @@
 #!/bin/bash
 # setup_airflow.sh
 
-# Create .env file
+# Create airflow/.env file
 echo "Creating .env file..."
 cat > $(pwd)/airflow/.env << EOF
 AIRFLOW_UID=$(id -u)

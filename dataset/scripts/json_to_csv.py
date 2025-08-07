@@ -42,7 +42,7 @@ def convert_json_to_csv_chunked(json_path, csv_path, chunksize=10000):
             df = pd.DataFrame(chunk)
             mode = 'w' if first_chunk else 'a'
             header = first_chunk
-            df.to_csv(csv_path, mode=mode, header=header, index=False)
+            df.to_csv(csv_path, mode=mode, header=header, index=False, sep=';')
             total_rows += len(df)
     
     print(f"Total rows converted: {total_rows:,}")

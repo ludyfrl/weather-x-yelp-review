@@ -25,7 +25,7 @@ This project implements a simple yet robust data pipeline designed for small to 
 - Self-service reporting and data exploration
 
 ## Dataset Preparation
-Since there are some restriction when trying to download the Yelp dataset using simple `curl`, I am mimicking browser behavior to bypass the restriction with this command.
+Since there are some restriction when trying to download the Yelp dataset using simple `curl`, I am mimicking browser behavior to bypass the restriction.
 ```bash
 curl -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
    -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" \
@@ -38,19 +38,20 @@ curl -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.3
 Then, use this command to extract the zip and tar file.
 ```bash
 unzip Yelp-JSON.zip
-tar -xvf 'Yelp JSON'/yelp_dataset.tar -C $(pwd)/dataset/yelp
+tar -xvf 'Yelp JSON'/yelp_dataset.tar -C dataset/yelp
 
 # Clean up unnecessary files
 rm Yelp-JSON.zip && rm -r 'Yelp JSON' && rm -r __MACOSX
 ```
 Use `json_to_csv.py` script to convert the JSON files into CSV. Don't forget to clean up the JSON files later to save storage.
 ```bash
-python -m venv myenv
+python -m venv venv
 
 source venv/bin/activate
 pip install -r requirements.txt
 
 python dataset/scripts/json_to_csv.py
+rm dataset/yelp/*.json && rm dataset/yelp/*.pdf
 ```
 
 ## Installation
@@ -59,7 +60,26 @@ Generate environment variable for Airflow
 ```bash
 ./setup_airflow.sh
 ```
-Run docker compose to deploy Airflow
+Run docker compose to deploy Airflow and another docker container for postgres-dwh.
 ```bash
 docker compose -f airflow/docker-compose.yaml up -d
+
+docker run -d \
+    --name postgres-dwh \
+    --network airflow_default \
+    -e POSTGRES_PASSWORD=password \
+    -e POSTGRES_DB=data_dwh \
+    -p 5432:5432 \
+    -v $(pwd)/migrations:/docker-entrypoint-initdb.d \
+    postgres
+```
+Add the newly created postgres-dwh to the Airflow connections
+```bash
+docker exec airflow-airflow-apiserver-1 airflow connections add \
+  'postgres_dwh' \
+  --conn-type 'postgres' \
+  --conn-host 'postgres-dwh' \
+  --conn-port 5432 \
+  --conn-login 'data_dwh' \
+  --conn-password 'data_dwh'
 ```
